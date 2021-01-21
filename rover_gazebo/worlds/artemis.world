@@ -1,0 +1,167 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <light type="directional" name="my_light" cast_shadows="false">
+       <origin pose="0 0 30 0 0 0"/>
+       <diffuse rgba=".9 .9 .9 1"/>
+       <specular rgba=".1 .1 .1 1"/>
+       <attenuation range="20"/>
+       <direction xyz="0 0 -1"/>
+     </light>
+
+     <light type="point" name="point_light" cast_shadows="false">
+        <origin pose="8 5 20 0 0 0"/>
+        <diffuse rgba=".9 .9 .9 1"/>
+        <specular rgba=".1 .1 .1 1"/>
+        <attenuation range="20"/>
+        
+      </light>
+
+    <model name="back_wall">
+      <pose>-0.3 8.53 2.44 0 0 0</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>12.8 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <geometry>
+           <box>
+             <size>12.8 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+
+    <model name="right_wall">
+      <pose>6.09 4.26 2.44 0 0 1.57 </pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>8.53 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <geometry>
+           <box>
+             <size>8.53 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+
+    <model name="front_wall">
+      <pose>3.05 0 2.44 0 0 0</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>6.09 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <geometry>
+           <box>
+             <size>6.09 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="back_left_wall">
+      <pose>-7.57 7.92 2.44 0 0 0.61</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>2.63 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <geometry>
+           <box>
+             <size>2.63 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="door_wall">
+      <pose>-1.08 -0.756 2.44 0 0 0.61</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>3.14 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <geometry>
+           <box>
+             <size>3.14 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="left_wall">
+      <pose>-5.22 2.86 2.44 0 0 2.18</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>11.17 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <geometry>
+           <box>
+             <size>11.17 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="column">
+      <pose>-0.5 7.31 2.18 0 0 0</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>1.2 1.2 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <geometry>
+           <box>
+             <size>1.2 1.2 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+  </world>
+</sdf>
