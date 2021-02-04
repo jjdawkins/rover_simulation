@@ -18,7 +18,7 @@
         <diffuse rgba=".9 .9 .9 1"/>
         <specular rgba=".1 .1 .1 1"/>
         <attenuation range="20"/>
-        
+
       </light>
 
     <model name="back_wall">
@@ -33,6 +33,7 @@
          </geometry>
        </collision>
        <visual name="visual">
+         <transparency>0.3</transparency>
          <geometry>
            <box>
              <size>12.8 0.5 4.87</size>
@@ -54,6 +55,7 @@
          </geometry>
        </collision>
        <visual name="visual">
+         <transparency>0.3</transparency>
          <geometry>
            <box>
              <size>8.53 0.5 4.87</size>
@@ -75,6 +77,7 @@
          </geometry>
        </collision>
        <visual name="visual">
+         <transparency>0.3</transparency>
          <geometry>
            <box>
              <size>6.09 0.5 4.87</size>
@@ -95,6 +98,7 @@
          </geometry>
        </collision>
        <visual name="visual">
+         <transparency>0.3</transparency>
          <geometry>
            <box>
              <size>2.63 0.5 4.87</size>
@@ -115,6 +119,7 @@
          </geometry>
        </collision>
        <visual name="visual">
+         <transparency>0.3</transparency>
          <geometry>
            <box>
              <size>3.14 0.5 4.87</size>
@@ -135,6 +140,7 @@
          </geometry>
        </collision>
        <visual name="visual">
+         <transparency>0.3</transparency>
          <geometry>
            <box>
              <size>11.17 0.5 4.87</size>
@@ -155,6 +161,7 @@
          </geometry>
        </collision>
        <visual name="visual">
+         <transparency>0.3</transparency>         
          <geometry>
            <box>
              <size>1.2 1.2 4.87</size>

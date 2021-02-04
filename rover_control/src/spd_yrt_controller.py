@@ -7,34 +7,45 @@ import numpy as np
 from ackermann_msgs.msg import *
 from std_msgs.msg import Empty, String, Header, Float64
 from nav_msgs.msg import Odometry
+from geometry_msgs.msg import Twist, Quaternion
+import tf
+from tf_conversions.transformations import quaternion_to_euler
+
 
 class roverControl:
     def __init__(self):
 
-        self.max_str_angle = rospy.get_param('max_str_angle',0.75)
+        self.max_str_angle = rospy.get_param('max_str_angle',0.6)
         self.max_speed = rospy.get_param('max_speed',2)
         self.L = rospy.get_param('wheel_base',0.2) # 0.2 meters
-        self.KpSpd = rospy.get_param('Kp_spd',0.1)
-        self.KiSpd = rospy.get_param('Ki_spd',0.02)
+        self.KpSpd = rospy.get_param('Kp_spd',20)
+        self.KiSpd = rospy.get_param('Ki_spd',1)
 
-        self.acker_pub = rospy.Publisher('acker_cmd',AckermannDriveStamped,self.ackerCallBack)
+        self.acker_pub = rospy.Publisher('acker_cmd',AckermannDriveStamped,queue_size=5)
         self.pose_sub = rospy.Subscriber('cmd_vel',Twist,self.twistCallback)
-        self.qtm_sub = rospy.Subscriber('/qualisys/Truck1/odom',Odometry,self.odomCallback)
+        self.qtm_sub = rospy.Subscriber('odom',Odometry,self.odomCallback)
         self.send_timer = rospy.Timer(rospy.Duration(0.1), self.sendCallBack)
 
         self.ackMsg = AckermannDriveStamped()
         self.twistMsg = Twist()
         self.yawRate = 0.0
         self.desSpeed = 0.0
+        self.spdErrInt = 0;
 
     def twistCallback(self,msg):
         self.yawRate = msg.angular.z
         self.desSpeed = msg.linear.x
 
     def odomCallback(self,msg):
-        speedx = msg.twist.linear.x
-        speedy = msg.twist.linear.y
-        self.speed = math.sqrt(speedx^2 + speedy^2)
+        q = Quaternion()
+        q[0] = msg.pose.pose.orientiation.x
+        q[1] = msg.pose.pose.orientiation.y
+        q[2] = msg.pose.pose.orientiation.z
+        q[3] = msg.pose.pose.orientiation.w
+
+        speedx = msg.twist.twist.linear.x
+        speedy = msg.twist.twist.linear.y
+        self.speed = math.sqrt(speedx*speedx + speedy*speedy)
 
     def sendCallBack(self,msg):
         # Steering controller (using yaw rate speed kinematics)
@@ -49,21 +60,24 @@ class roverControl:
 
         # PWM duty cycle for throttle control
         self.thr_cmd = self.KpSpd*self.spdErr + self.KiSpd*self.spdErrInt # PI controller
+
         # Saturate speed command at 20% duty cycle
-        if self.thr_cmd > 0.2:
-            self.thr_cmd = 0.2
-        elif self.thr_cmd < -0.2:
-            self.thr_cmd = -0.2
+        #if self.thr_cmd > 0.2:
+        #    self.thr_cmd = 0.2
+        #elif self.thr_cmd < -0.2:
+        #    self.thr_cmd = -0.2
 
         # update speed error integral term
         self.spdErrInt = self.spdErrInt + self.spdErr*0.1 # 10 Hz sampling rate
         # saturate speed error integral term at 2
-        if self.spdErrInt > 2:
-            self.spdErrInt = 2.0
+        #if self.spdErrInt > 2:
+        #    self.spdErrInt = 2.0
 
         # package ackermann message
-        self.ackMsg.steering_angle = steerAng
-        self.ackMsg.acceleration = self.thr_cmd
+        self.ackMsg.drive.steering_angle = steerAng
+        self.ackMsg.drive.acceleration = self.thr_cmd
+
+        rospy.loginfo("%f,%f",self.speed,self.thr_cmd)
         # publish ackermann message
         self.acker_pub.publish(self.ackMsg)
 
