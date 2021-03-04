@@ -197,8 +197,8 @@
 
   <xacro:arg name="name" default="camera" />
   <xacro:arg name="topics_ns" default="camera" />
-  <xacro:arg name="use_nominal_extrinsics" default="false" />
-  <xacro:arg name="publish_pointcloud" default="false" />
+  <xacro:arg name="use_nominal_extrinsics" default="true" />
+  <xacro:arg name="publish_pointcloud" default="true" />
   <xacro:arg name="add_plug" default="false" />
   <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
 
