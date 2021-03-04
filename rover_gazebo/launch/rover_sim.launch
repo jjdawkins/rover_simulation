@@ -12,8 +12,9 @@
   <param name="robot_description" command="$(find xacro)/xacro '$(find rover_description)/urdf/rover.xacro'" />
 
   <!-- push robot_description to factory and spawn robot in gazebo -->
-  <node name="rover_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model rover -x 2 -y 2 -z 0.1" />
+  <arg name="node_start_delay" default="3.0" />
+  <node name="rover_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model rover -x 0 -y 2 -z 0.1" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' " />
 
-  <include file="$(find rover_control)/launch/rover_control.launch"/>
+  <!--include file="$(find rover_control)/launch/rover_control.launch"/-->
 
 </launch>

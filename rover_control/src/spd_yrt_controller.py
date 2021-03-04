@@ -9,7 +9,7 @@ from std_msgs.msg import Empty, String, Header, Float64
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist, Quaternion
 import tf
-from tf_conversions.transformations import quaternion_to_euler
+#from tf_conversions.transformations import quaternion_to_euler
 
 
 class roverControl:
@@ -38,10 +38,10 @@ class roverControl:
 
     def odomCallback(self,msg):
         q = Quaternion()
-        q[0] = msg.pose.pose.orientiation.x
-        q[1] = msg.pose.pose.orientiation.y
-        q[2] = msg.pose.pose.orientiation.z
-        q[3] = msg.pose.pose.orientiation.w
+#        q[0] = msg.pose.pose.orientation.x
+#        q[1] = msg.pose.pose.orientation.y
+#        q[2] = msg.pose.pose.orientation.z
+#        q[3] = msg.pose.pose.orientation.w
 
         speedx = msg.twist.twist.linear.x
         speedy = msg.twist.twist.linear.y
@@ -62,16 +62,16 @@ class roverControl:
         self.thr_cmd = self.KpSpd*self.spdErr + self.KiSpd*self.spdErrInt # PI controller
 
         # Saturate speed command at 20% duty cycle
-        #if self.thr_cmd > 0.2:
-        #    self.thr_cmd = 0.2
-        #elif self.thr_cmd < -0.2:
-        #    self.thr_cmd = -0.2
+        if self.thr_cmd > 0.2:
+            self.thr_cmd = 0.2
+        elif self.thr_cmd < 0:
+            self.thr_cmd = -0.05
 
         # update speed error integral term
         self.spdErrInt = self.spdErrInt + self.spdErr*0.1 # 10 Hz sampling rate
         # saturate speed error integral term at 2
-        #if self.spdErrInt > 2:
-        #    self.spdErrInt = 2.0
+        if self.spdErrInt > 2:
+            self.spdErrInt = 2.0
 
         # package ackermann message
         self.ackMsg.drive.steering_angle = steerAng

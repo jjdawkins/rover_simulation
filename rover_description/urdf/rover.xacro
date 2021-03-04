@@ -65,6 +65,7 @@
     <parent link="chassis" />
     <child link="left_rear_wheel" />
     <axis xyz="0 0 -1" />
+    <!--dynamics damping="0.05" friction="0.0"/-->
     <limit effort="10" velocity="100" />
   </joint>
 
@@ -90,6 +91,7 @@
     <parent link="chassis" />
     <child link="right_rear_wheel" />
     <axis xyz="0 0 -1" />
+    <!--dynamics damping="0.05" friction="0.0"/-->
     <limit effort="10" velocity="100" />
   </joint>
 
@@ -112,6 +114,7 @@
     <parent link="chassis" />
     <child link="left_steering_hinge" />
     <axis xyz="-1 0 0" />
+
     <limit lower="-1.0" upper="1.0" effort="10" velocity="100" />
   </joint>
 
@@ -159,6 +162,7 @@
     <parent link="left_steering_hinge" />
     <child link="left_front_wheel" />
     <axis xyz="0 0 -1" />
+    <!--dynamics damping="0.05" friction="0.0"/-->
     <limit effort="10" velocity="100" />
   </joint>
 
@@ -183,12 +187,58 @@
     <origin xyz="0 0 0" rpy="1.5708 0 0" />
     <parent link="right_steering_hinge" />
     <child link="right_front_wheel" />
+    <!--dynamics damping="0.05" friction="0.0"/-->
     <axis xyz="0 0 -1" />
     <limit effort="10" velocity="100"/>
   </joint>
 
   <xacro:wheel_transmission name="right_front_wheel" />
 
+
+  <xacro:arg name="name" default="camera" />
+  <xacro:arg name="topics_ns" default="camera" />
+  <xacro:arg name="use_nominal_extrinsics" default="false" />
+  <xacro:arg name="publish_pointcloud" default="false" />
+  <xacro:arg name="add_plug" default="false" />
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro" />
+
+  <link name="realsense"/>
+  <xacro:sensor_d435 name="$(arg name)" topics_ns="$(arg topics_ns)" parent="realsense" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" publish_pointcloud="$(arg publish_pointcloud)" add_plug="$(arg add_plug)">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:sensor_d435>
+
+ <!--link name="realsense">
+   <inertial>
+     <mass value="1e-5" />
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+     <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+   </inertial>
+   <collision>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+     <geometry>
+       <box size="0.033 0.175 0.030"/>
+     </geometry>
+   </collision>
+   <visual>
+     <origin xyz="0 0 0" rpy="0 0 0"/>
+     <geometry>
+       <mesh filename="package://realsense2_description/meshes/d435.dae"/>
+     </geometry>
+   </visual>
+ </link-->
+
+
+ <!--xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro">
+   <sensor_d435 parent="realsense_link">
+   </sensor_d435>
+ </xacro:include-->
+
+ <joint name="realsense_joint" type="fixed">
+   <origin xyz="0.2 0.0 0.15" rpy="0 0 0"/>
+   <parent link="chassis" />
+   <child link="realsense" />
+   <axis xyz="0 0 1" />
+ </joint>
   <!-- Add Hokuyo laser scanner -->
 
   <link name="laser">
@@ -218,66 +268,6 @@
   </joint>
 
 
-  <!-- zed camera -->
-  <link name="zed_camera_link">
-    <inertial>
-      <mass value="1e-5" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.033 0.175 0.030"/>
-      </geometry>
-    </collision>
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.033 0.175 0.030"/>
-      </geometry>
-      <material name="red"/>
-    </visual>
-  </link>
-
-  <joint name="zed_camera_joint" type="fixed">
-    <origin xyz="0.25 0 0.04" rpy="0 0 0"/>
-    <parent link="chassis"/>
-    <child link="zed_camera_link"/>
-    <axis xyz="0 0 1" />
-    <!-- <limit lower="0.0" upper="0.0" effort="0.0" velocity="0.0" /> -->
-  </joint>
-
-
-  <!-- zed camera lenses -->
-  <!-- It seems these have to have a non-zero mass to have a camera attached? -->
-  <link name="camera_link"><!-- this needs to match the name in zed_wrapper/zed_tf.launch -->
-    <inertial>
-      <mass value="1e-5" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-  </link>
-  <link name="zed_camera_right_link">
-    <inertial>
-      <mass value="1e-5" />
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-    </inertial>
-  </link>
-
-  <joint name="zed_camera_left_joint" type="fixed">
-    <origin xyz="0 0.06 0" rpy="0 0 0"/>
-    <parent link="zed_camera_link"/>
-    <child link="camera_link"/>
-    <axis xyz="0 0 1" />
-  </joint>
-  <joint name="zed_camera_right_joint" type="fixed">
-    <origin xyz="0 -0.06 0" rpy="0 0 0"/>
-    <parent link="zed_camera_link"/>
-    <child link="zed_camera_right_link"/>
-    <axis xyz="0 0 1" />
-  </joint>
 
   <!-- Add the remaining xacros -->
 
