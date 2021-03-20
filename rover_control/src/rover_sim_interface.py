@@ -13,8 +13,6 @@ from sensor_msgs.msg import Joy
 class roverInterfaceSim:
     def __init__(self):
 
-        self.max_str_angle = rospy.get_param('max_str_angle',0.3)
-        self.max_thr_cmd = rospy.get_param('max_thr_cmd',0.25)
 
         self.acker_sub = rospy.Subscriber('acker_cmd',AckermannDriveStamped,self.ackerCallBack)
         self.joy_sub = rospy.Subscriber('/joy',Joy,self.joyCallBack)
