@@ -1,0 +1,201 @@
+<?xml version="1.0" ?>
+<sdf version="1.4">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+    <gui>
+      <camera name="user_camera">
+        <pose>-5 3 9 0 0.9 0</pose>
+      </camera>
+    </gui>
+
+    <light type="directional" name="my_light" cast_shadows="false">
+       <origin pose="0 0 30 0 0 0"/>
+       <diffuse rgba=".9 .9 .9 1"/>
+       <specular rgba=".1 .1 .1 1"/>
+       <attenuation range="50"/>
+       <direction xyz="0 0 -1"/>
+     </light>
+
+     <light type="point" name="light_1" cast_shadows="true">
+        <origin pose="3 2 3 0 0 0"/>
+        <diffuse rgba=".9 .9 .9 1"/>
+        <specular rgba=".1 .1 .1 1"/>
+        <attenuation range="50"/>
+
+      </light>
+
+      <light type="point" name="light_2" cast_shadows="true">
+         <origin pose="3 6 3 0 0 0"/>
+         <diffuse rgba=".9 .9 .9 1"/>
+         <specular rgba=".1 .1 .1 1"/>
+         <attenuation range="50"/>
+
+       </light>
+
+       <light type="point" name="light_3" cast_shadows="true">
+          <origin pose="-3 2 3 0 0 0"/>
+          <diffuse rgba=".9 .9 .9 1"/>
+          <specular rgba=".1 .1 .1 1"/>
+          <attenuation range="50"/>
+
+        </light>
+        <light type="point" name="light_4" cast_shadows="true">
+           <origin pose="-3 6 3 0 0 0"/>
+           <diffuse rgba=".9 .9 .9 1"/>
+           <specular rgba=".1 .1 .1 1"/>
+           <attenuation range="50"/>
+
+         </light>
+    <model name="back_wall">
+      <pose>-0.3 8.03 2.44 0 0 0</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>12.8 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>12.8 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+
+    <model name="right_wall">
+      <pose>6.09 3.86 2.44 0 0 1.57 </pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>9.03 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>9.03 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+
+    <model name="front_wall">
+      <pose>3.05 -0.5 2.44 0 0 0</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>6.09 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>6.09 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="back_left_wall">
+      <pose>-7.57 7.42 2.44 0 0 0.61</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>2.33 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>2.63 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="door_wall">
+      <pose>-1.08 -1.256 2.44 0 0 0.61</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>3.14 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>3.14 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="left_wall">
+      <pose>-5.22 2.36 2.44 0 0 2.18</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>11.17 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>11.17 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="column">
+      <pose>-0.5 6.81 2.18 0 0 0</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>1.2 1.2 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>1.2 1.2 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+  </world>
+</sdf>
