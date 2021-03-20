@@ -13,8 +13,8 @@ from sensor_msgs.msg import Joy
 class roverInterfaceSim:
     def __init__(self):
 
-        self.max_str_angle = rospy.get_param('max_str_angle',0.75)
-        self.max_speed = rospy.get_param('max_speed',2)
+        self.max_str_angle = rospy.get_param('max_str_angle',0.3)
+        self.max_thr_cmd = rospy.get_param('max_thr_cmd',0.25)
 
         self.acker_sub = rospy.Subscriber('acker_cmd',AckermannDriveStamped,self.ackerCallBack)
         self.joy_sub = rospy.Subscriber('/joy',Joy,self.joyCallBack)
@@ -33,8 +33,8 @@ class roverInterfaceSim:
 
     def joyCallBack(self,msg):
         self.auto = False
-        self.thr_cmd = 0.1*msg.axes[1]
-        self.str_ang  = 0.5*msg.axes[2]
+        self.thr_cmd = self.max_thr_cmd*msg.axes[1]
+        self.str_ang  = self.max_str_angle*msg.axes[2]
 
     def ackerCallBack(self,msg):
         self.auto = True
@@ -59,6 +59,13 @@ class roverInterfaceSim:
         self.left_rear_thr_pub.publish(thr_cmd)
         self.right_rear_thr_pub.publish(thr_cmd)
         str_cmd = Float64()
+
+        if(self.str_ang > self.max_str_angle):
+            self.str_ang = self.max_str_angle
+
+        if(self.str_ang < -self.max_str_angle):
+            self.str_ang = -self.max_str_angle
+
         str_cmd.data = self.str_ang
         self.left_str_ang_pub.publish(str_cmd)
         self.right_str_ang_pub.publish(str_cmd)
