@@ -108,5 +108,18 @@
   </gazebo>
 </xacro:unless>
 
+  <!-- IMU -->
+<gazebo>
+    <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+      <alwaysOn>true</alwaysOn>
+      <bodyName>base_link</bodyName>
+      <robotNamespace>/rover</robotNamespace>
+      <topicName>imu</topicName>
+      <serviceName>imu_service</serviceName>
+      <gaussianNoise>0.02</gaussianNoise>
+      <updateRate>50.0</updateRate>
+    </plugin>
+</gazebo>
+
 
 </robot>
