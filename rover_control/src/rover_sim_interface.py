@@ -13,7 +13,8 @@ from sensor_msgs.msg import Joy
 class roverInterfaceSim:
     def __init__(self):
 
-
+        self.max_thr_cmd=rospy.get_param('max_str_angle',0.75)
+        self.max_str_angle=rospy.get_param('max_throttle',0.2)
         self.acker_sub = rospy.Subscriber('acker_cmd',AckermannDriveStamped,self.ackerCallBack)
         self.joy_sub = rospy.Subscriber('/joy',Joy,self.joyCallBack)
         self.left_front_thr_pub = rospy.Publisher('left_front_wheel_effort_controller/command',Float64,queue_size=10)
