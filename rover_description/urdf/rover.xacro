@@ -276,6 +276,35 @@
   </collision>
 </link>
 
+
+<joint name="gps_joint" type="fixed">
+  <axis xyz="1 0 0"/> <!-- 0 1 0 -->
+  <origin xyz="0 0 0.05"/>
+  <parent link="base_link"/>
+  <child link="gps_link"/>
+</joint>
+
+
+<link name="gps_link">
+  <inertial>
+    <mass value="0.001"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <box size=".001 .001 .001"/>
+    </geometry>
+  </collision>
+</link>
+
   <!-- Ahttps://github.com/NevzatBOL/ROS-Beginner/blob/master/catkin_ws/src/sensor_models/urdf/imu.xmldd the remaining xacros -->
 
   <xacro:include filename="$(find rover_description)/urdf/rover.gazebo" />
