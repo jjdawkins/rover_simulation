@@ -207,26 +207,6 @@
     <origin xyz="0 0 0" rpy="0 0 0"/>
   </xacro:sensor_d435>
 
- <!--link name="realsense">
-   <inertial>
-     <mass value="1e-5" />
-     <origin xyz="0 0 0" rpy="0 0 0"/>
-     <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
-   </inertial>
-   <collision>
-     <origin xyz="0 0 0" rpy="0 0 0"/>
-     <geometry>
-       <box size="0.033 0.175 0.030"/>
-     </geometry>
-   </collision>
-   <visual>
-     <origin xyz="0 0 0" rpy="0 0 0"/>
-     <geometry>
-       <mesh filename="package://realsense2_description/meshes/d435.dae"/>
-     </geometry>
-   </visual>
- </link-->
-
 
  <!--xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro">
    <sensor_d435 parent="realsense_link">
@@ -239,6 +219,7 @@
    <child link="realsense" />
    <axis xyz="0 0 1" />
  </joint>
+ 
   <!-- Add Hokuyo laser scanner -->
 
   <link name="laser">
@@ -267,9 +248,35 @@
     <axis xyz="0 0 1" />
   </joint>
 
+<joint name="imu_joint" type="fixed">
+  <axis xyz="1 0 0"/> <!-- 0 1 0 -->
+  <origin xyz="0 0 0.19"/>
+  <parent link="base_link"/>
+  <child link="imu_link"/>
+</joint>
 
 
-  <!-- Add the remaining xacros -->
+<link name="imu_link">
+  <inertial>
+    <mass value="0.001"/>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <box size="0.001 0.001 0.001"/>
+    </geometry>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <box size=".001 .001 .001"/>
+    </geometry>
+  </collision>
+</link>
+
+  <!-- Ahttps://github.com/NevzatBOL/ROS-Beginner/blob/master/catkin_ws/src/sensor_models/urdf/imu.xmldd the remaining xacros -->
 
   <xacro:include filename="$(find rover_description)/urdf/rover.gazebo" />
   <xacro:include filename="$(find rover_description)/urdf/materials.xacro" />
