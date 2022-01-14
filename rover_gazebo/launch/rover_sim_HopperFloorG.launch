@@ -8,6 +8,7 @@
     <arg name="debug" value="false"/>
   </include>
 
+  <rosparam file="$(find rover_gazebo)/config/gazebo_rover_sim.yaml" command="load"/>
   <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
   <param name="robot_description" command="$(find xacro)/xacro '$(find rover_description)/urdf/rover.xacro'" />
 

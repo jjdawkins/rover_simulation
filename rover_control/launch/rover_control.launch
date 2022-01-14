@@ -4,9 +4,13 @@
   <rosparam file="$(find rover_control)/config/rover_control_sim.yaml" command="load"/>
 
   <!-- load the controllers -->
-  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+  <!--node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" ns="/rover" args="left_rear_wheel_effort_controller right_rear_wheel_effort_controller
     right_front_wheel_effort_controller left_front_wheel_effort_controller
+    left_steering_hinge_position_controller right_steering_hinge_position_controller joint_state_controller"/-->
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+    output="screen" ns="/rover" args="left_rear_wheel_speed_controller right_rear_wheel_speed_controller
+    right_front_wheel_speed_controller left_front_wheel_speed_controller
     left_steering_hinge_position_controller right_steering_hinge_position_controller joint_state_controller"/>
 
   <!-- convert joint states to TF transforms for rviz, etc -->
@@ -15,8 +19,12 @@
     <remap from="/joint_states" to="/rover/joint_states" />
   </node-->
 
-  <node ns = "rover" name="rover_sim_interface" pkg="rover_control" type="rover_sim_interface.py"/>
-  <node ns = "rover" name="turtlebot3_teleop_remapper" pkg="rover_control" type="turtlebot3_teleop_remapper.py"/>
+  <!-- servo, VESC, and forward speed (based on wheel speed) node -->
+  <node pkg="rover_control" type="VESC_servo_sim.py" name="hardware_io" ns ="/rover" />
+
+
+
+  <!--node ns = "rover" name="turtlebot3_teleop_remapper" pkg="rover_control" type="turtlebot3_teleop_remapper.py"/-->
   <!--node ns = "rover" name="rover_tracking_control" pkg="rover_control" type="spd_yrt_controller.py"/-->
 
 </launch>

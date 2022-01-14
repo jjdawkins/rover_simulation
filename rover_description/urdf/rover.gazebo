@@ -7,42 +7,42 @@
   <mu1 value="0.0"/>
   <mu2 value="0.0"/>
   <kp  value="10000000.0" />
-  <kd  value="1.0" />
+  <kd  value="2.0" />
   <material>Gazebo/Blue</material>
 </gazebo>
 
 <gazebo reference="left_rear_wheel">
-  <mu1 value="1.0"/>
-  <mu2 value="1.0"/>
+  <mu1 value="2.0"/>
+  <mu2 value="2.0"/>
   <kp  value="10000000.0" />
-  <kd  value="1.0" />
+  <kd  value="2.0" />
   <fdir1 value="1 0 0"/>
   <!--material>Gazebo/Black</material-->
 </gazebo>
 
 <gazebo reference="right_rear_wheel">
-  <mu1 value="1.0"/>
-  <mu2 value="1.0"/>
+  <mu1 value="2.0"/>
+  <mu2 value="2.0"/>
   <kp  value="10000000.0" />
-  <kd  value="1.0" />
+  <kd  value="2.0" />
   <fdir1 value="1 0 0"/>
   <!--material>Gazebo/Black</material-->
 </gazebo>
 
 <gazebo reference="left_front_wheel">
-  <mu1 value="1.0"/>
-  <mu2 value="1.0"/>
+  <mu1 value="2.0"/>
+  <mu2 value="2.0"/>
   <kp  value="10000000.0" />
-  <kd  value="1.0" />
+  <kd  value="2.0" />
   <fdir1 value="0 0 1"/>
   <!--material>Gazebo/Black</material-->
 </gazebo>
 
 <gazebo reference="right_front_wheel">
-  <mu1 value="1.0"/>
-  <mu2 value="1.0"/>
+  <mu1 value="2.0"/>
+  <mu2 value="2.0"/>
   <kp  value="10000000.0" />
-  <kd  value="1.0" />
+  <kd  value="2.0" />
   <fdir1 value="0 0 1"/>
   <!--material>Gazebo/Black</material-->
 </gazebo>
@@ -65,7 +65,7 @@
     <xyzOffsets>0 0 0</xyzOffsets>
     <rpyOffsets>0 0 0</rpyOffsets>
   </plugin>
-    
+
 </gazebo>
 
 
@@ -103,7 +103,7 @@
         </noise>
       </ray>
       <plugin name="gazebo_ros_hokuyo_controller" filename="libgazebo_ros_laser.so">
-        <topicName>/scan</topicName>
+        <topicName>rover/scan</topicName>
         <frameName>laser</frameName>
       </plugin>
     </sensor>

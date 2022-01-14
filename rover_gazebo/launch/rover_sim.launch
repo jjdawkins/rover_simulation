@@ -8,6 +8,7 @@
     <arg name="debug" value="false"/>
   </include>
 
+  <rosparam file="$(find rover_gazebo)/config/gazebo_rover_sim.yaml" command="load"/>
   <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
   <param name="robot_description" command="$(find xacro)/xacro '$(find rover_description)/urdf/rover.xacro'" />
 
@@ -15,7 +16,9 @@
 
   <node name="rover_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model rover -x 0 -y 2 -z 0.1"/>
 
-  <!--node pkg="tf" type="static_transform_publisher" name="rover2map" args="0 0 0 x y z w  /uav/base_link_ENU /laser  100"/-->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+  <!--\\node pkg="tf" type="static_transform_publisher" name="rover2map" args="0 0 0 x y z w  /uav/base_link_ENU /laser  100"/-->
   <!--include file="$(find rover_control)/launch/rover_control.launch"/-->
 
 </launch>
