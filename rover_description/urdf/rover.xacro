@@ -219,7 +219,7 @@
    <child link="realsense" />
    <axis xyz="0 0 1" />
  </joint>
- 
+
   <!-- Add Hokuyo laser scanner -->
 
   <link name="laser">
@@ -249,7 +249,6 @@
   </joint>
 
 <joint name="imu_joint" type="fixed">
-  <axis xyz="1 0 0"/> <!-- 0 1 0 -->
   <origin xyz="0 0 0.19"/>
   <parent link="base_link"/>
   <child link="imu_link"/>
@@ -278,9 +277,8 @@
 
 
 <joint name="gps_joint" type="fixed">
-  <axis xyz="1 0 0"/> <!-- 0 1 0 -->
   <origin xyz="0 0 0.05"/>
-  <parent link="base_link"/>
+  <parent link="imu_link"/>
   <child link="gps_link"/>
 </joint>
 

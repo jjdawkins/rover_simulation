@@ -61,11 +61,11 @@
     <bodyName>base_link</bodyName>
     <topicName>rover/odom</topicName>
     <gaussianNoise>0.01</gaussianNoise>
-    <frameName>world</frameName>
+    <frameName>odom</frameName>
     <xyzOffsets>0 0 0</xyzOffsets>
     <rpyOffsets>0 0 0</rpyOffsets>
   </plugin>
-    
+
 </gazebo>
 
 
@@ -119,7 +119,7 @@
     <visualize>true</visualize>
     <topic>__default_topic__</topic>
     <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-      <topicName>rover/imu</topicName>
+      <topicName>rover/imu/data</topicName>
       <bodyName>imu_link</bodyName>
       <updateRateHZ>10.0</updateRateHZ>
       <gaussianNoise>0.0</gaussianNoise>
@@ -138,12 +138,16 @@
     <alwaysOn>true</alwaysOn>
     <updateRate>10.0</updateRate>
     <bodyName>gps_link</bodyName>
-    <topicName>rover/gps</topicName>
+    <topicName>rover/gps/fix</topicName>
     <velocityTopicName>rover/gps/fix_velocity</velocityTopicName>
     <drift>5.0 5.0 5.0</drift>
     <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
     <velocityDrift>0 0 0</velocityDrift>
     <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+    <referenceLatitude>38.983709</referenceLatitude>
+    <referenceLongitude>-76.482958</referenceLongitude>
+    <referenceHeading>0.0</referenceHeading>
+    <referenceAltitude>0.0</referenceAltitude>
   </plugin>
 </gazebo>
 
