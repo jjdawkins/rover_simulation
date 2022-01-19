@@ -5,29 +5,31 @@ import rospy
 import tf_conversions
 
 import tf2_ros
-from geometry_msgs.msg import TransformStamped, Pose, Quaternion
+import geometry_msgs.msg
 from nav_msgs.msg import Odometry
 
-
-def handle_rover_odom(msg):
+def handle_rover_pose(msg, rovername):
     br = tf2_ros.TransformBroadcaster()
-    t = TransformStamped()
+    t = geometry_msgs.msg.TransformStamped()
 
     t.header.stamp = rospy.Time.now()
-    t.header.frame_id = "map"
+    t.header.frame_id = "world"
     t.child_frame_id = "base_link"
     t.transform.translation.x = msg.pose.pose.position.x
     t.transform.translation.y = msg.pose.pose.position.y
-    t.transform.translation.z = msg.pose.pose.position.z
-    t.transform.rotation = msg.pose.pose.orientation
-    #t.transform.rotation.x = msg.pose.pose.orientation.x
-    #t.transform.rotation.y = msg.pose.pose.orientation.y
-    #t.transform.rotation.z = msg.pose.pose.orientation.z
-    #t.transform.rotation.w = msg.pose.pose.orientation.x
+    t.transform.translation.z = 0.0
+    t.transform.rotation.x = msg.pose.pose.orientation.x
+    t.transform.rotation.y = msg.pose.pose.orientation.y
+    t.transform.rotation.z = msg.pose.pose.orientation.z
+    t.transform.rotation.w = msg.pose.pose.orientation.w
 
     br.sendTransform(t)
 
 if __name__ == '__main__':
     rospy.init_node('tf2_rover_broadcaster')
-    rospy.Subscriber('rover/odom',Odometry, handle_rover_odom)
+    rovername = 'rover'
+    rospy.Subscriber('/%s/odom' % rovername,
+                     Odometry,
+                     handle_rover_pose,
+                     rovername)
     rospy.spin()

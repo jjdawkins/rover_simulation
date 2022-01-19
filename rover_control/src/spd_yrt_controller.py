@@ -30,7 +30,8 @@ class roverControl:
         self.twistMsg = Twist()
         self.yawRate = 0.0
         self.desSpeed = 0.0
-        self.spdErrInt = 0;
+        self.spdErrInt = 0
+        self.speed = 0.0
 
     def twistCallback(self,msg):
         self.yawRate = msg.angular.z
