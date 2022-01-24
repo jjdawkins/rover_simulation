@@ -2,7 +2,7 @@
 <param name="robot_description" command="$(find xacro)/xacro '$(find rover_description)/urdf/rover.xacro'"/>
 
 <arg name="x" default="0"/>
-<arg name="y" default="2"/>
+<arg name="y" default="0"/>
 <arg name="z" default="0.5"/>
 
 
