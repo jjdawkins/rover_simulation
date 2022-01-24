@@ -6,11 +6,28 @@
   <!-- Add chassis and it's inertia link -->
 
   <link name="base_link" />
-
+  <link name="imu_link">
+    <inertial>
+      <mass value="0.001"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <box size=".001 .001 .001"/>
+      </geometry>
+    </collision>
+  </link>
   <link name="chassis">
     <visual>
       <xacro:chassis_geometry/>
-      <!--material name="blue" /-->
     </visual>
   </link>
 
@@ -132,7 +149,7 @@
     </visual>
   </link>
 
-  <joint name="right_steering_hinge_joint" type="continuous">
+  <joint name="right_steering_hinge_joint" type="revolute">
     <origin xyz="0.25 -0.12 0" rpy="0 1.5708 0" />
     <parent link="chassis" />
     <child link="right_steering_hinge" />
@@ -192,10 +209,21 @@
     <limit effort="10" velocity="100"/>
   </joint>
 
+
+
   <xacro:wheel_transmission name="right_front_wheel" />
 
+  <joint name="imu_joint" type="fixed">
+    <axis xyz="1 0 0"/> <!-- 0 1 0 -->
+    <origin xyz="0 0 0.19"/>
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+  </joint>
 
-  <xacro:arg name="name" default="camera" />
+
+
+
+  <!--xacro:arg name="name" default="camera" />
   <xacro:arg name="topics_ns" default="camera" />
   <xacro:arg name="use_nominal_extrinsics" default="true" />
   <xacro:arg name="publish_pointcloud" default="true" />
@@ -205,7 +233,7 @@
   <link name="realsense"/>
   <xacro:sensor_d435 name="$(arg name)" topics_ns="$(arg topics_ns)" parent="realsense" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" publish_pointcloud="$(arg publish_pointcloud)" add_plug="$(arg add_plug)">
     <origin xyz="0 0 0" rpy="0 0 0"/>
-  </xacro:sensor_d435>
+  </xacro:sensor_d435-->
 
 
  <!--xacro:include filename="$(find realsense2_description)/urdf/_d435.urdf.xacro">
@@ -213,13 +241,13 @@
    </sensor_d435>
  </xacro:include-->
 
- <joint name="realsense_joint" type="fixed">
+ <!--joint name="realsense_joint" type="fixed">
    <origin xyz="0.2 0.0 0.15" rpy="0 0 0"/>
    <parent link="chassis" />
    <child link="realsense" />
    <axis xyz="0 0 1" />
- </joint>
- 
+ </joint-->
+
   <!-- Add Hokuyo laser scanner -->
 
   <link name="laser">
@@ -248,33 +276,7 @@
     <axis xyz="0 0 1" />
   </joint>
 
-<joint name="imu_joint" type="fixed">
-  <axis xyz="1 0 0"/> <!-- 0 1 0 -->
-  <origin xyz="0 0 0.19"/>
-  <parent link="base_link"/>
-  <child link="imu_link"/>
-</joint>
 
-
-<link name="imu_link">
-  <inertial>
-    <mass value="0.001"/>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-    <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.0001"/>
-  </inertial>
-  <visual>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-    <geometry>
-      <box size="0.001 0.001 0.001"/>
-    </geometry>
-  </visual>
-  <collision>
-    <origin rpy="0 0 0" xyz="0 0 0"/>
-    <geometry>
-      <box size=".001 .001 .001"/>
-    </geometry>
-  </collision>
-</link>
 
 
 <joint name="gps_joint" type="fixed">

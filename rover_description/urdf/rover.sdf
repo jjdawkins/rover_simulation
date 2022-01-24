@@ -1,0 +1,379 @@
+<?xml version="1.0"?>
+ <sdf version="1.6">
+
+  <model name="rover">
+  <pose> 0 2 0.1 0 0 0 </pose>
+  <link name="base_link">
+    <pose> 0 0 0 0 0 0 </pose>
+    <inertial>
+      <mass>4.0</mass>
+      <inertia>
+        <ixx>0.126164</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.416519</iyy>
+        <iyz>0</iyz>
+        <izz>0.481014</izz>
+      </inertia>
+    </inertial>
+    <collison>
+
+      <geometry>
+        <box>
+          <size>0.3 0.2 0.1</size>
+        </box>
+      </geometry>
+    </collison>
+    <visual name ="visual">
+      <geometry>
+        <mesh>
+         <uri>model://chassis.dae</uri>
+       </mesh>
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="body">
+    <visual name ="visual">
+      <pose> -0.05 0 0.13 0 0 0 </pose>
+      <geometry>
+        <mesh>
+          <uri>model://body.dae </uri>
+        </mesh>
+      </geometry>
+    </visual>
+
+    <collison>
+      <geometry>
+        <box>
+          <size>0.3 0.2 0.1</size>
+        </box>
+      </geometry>
+    </collison>
+  </link>
+
+  <joint name="body_chassis_joint" type="fixed">
+    <pose> 0 0 0 0 0 0 </pose>
+    <parent>base_link</parent>
+    <child>body</child>
+  </joint>
+
+  <link name="left_rear_wheel">
+    <pose>-0.15 0.12 0 1.5708 0 0 </pose>
+    <inertial>
+      <mass>0.34055</mass>
+      <inertia>
+        <ixx>0.00026046</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.00026046</iyy>
+        <iyz>0</iyz>
+        <izz>0.00041226</izz>
+      </inertia>
+    </inertial>
+    <visual name ="visual">
+      <geometry>
+        <mesh>
+           <uri>model://wheel_tire.dae</uri>
+        </mesh>
+      </geometry>
+    </visual>
+    <collision name="collision">
+
+      <geometry>
+        <cylinder>
+          <length>0.045</length>
+          <radius>0.05</radius>
+        </cylinder>
+      </geometry>
+    </collision>
+  </link>
+
+
+  <joint name="left_rear_wheel_joint" type="revolute">
+    <pose> -0.15 0.12 0 1.5708 0 0 </pose>
+    <parent>base_link</parent>
+    <child>left_rear_wheel</child>
+    <axis> xyz="0 0 -1" />
+    <xyz>0 0 -1 </xyz>
+    <limit>
+      <lower>-1.79769e+308</lower>
+      <upper>1.79769e+308</upper>
+      <effort>10</effort>
+      <velocity>100</velocity>
+    </limit>
+  </axis>
+  </joint>
+
+
+  <link name="right_rear_wheel">
+    <pose> -0.15 -0.12 0 -1.5708 0 0 </pose>
+    <inertial>
+      <mass>0.34055</mass>
+      <inertia>
+        <ixx>0.00026046</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.00026046</iyy>
+        <iyz>0</iyz>
+        <izz>0.00041226</izz>
+      </inertia>
+    </inertial>
+    <visual name ="visual">
+      <geometry>
+        <mesh>
+          <uri>model://wheel_tire.dae</uri>
+        </mesh>
+      </geometry>
+    </visual>
+    <collision name="collision">
+      <geometry>
+        <cylinder>
+          <length>0.045</length>
+          <radius>0.05</radius>
+        </cylinder>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="right_rear_wheel_joint" type="revolute">
+    <pose>-0.15 -0.12 0 1.5708 0 0 </pose>
+    <parent>base_link</parent>
+    <child>right_rear_wheel</child>
+    <axis>
+      <xyz>0 0 -1 </xyz>
+    </axis>
+    <limit>
+      <lower>-1.79769e+308</lower>
+      <upper>1.79769e+308</upper>
+      <effort>10</effort>
+      <velocity>100</velocity>
+    </limit>
+  </joint>
+
+
+  <link name="left_steering_hinge">
+    <pose>0.15 0.12 0 0 1.5708 0</pose>
+    <inertial>
+      <mass>0.1</mass>
+      <inertia>
+        <ixx>4E-06</ixx>
+        <iyy>4E-06</iyy>
+        <izz>4E-06</izz>
+      </inertia>
+    </inertial>
+    <visual name ="visual">
+      <geometry>
+        <mesh>
+          <uri>model://left_steering_hinge.STL</uri>
+        </mesh>
+      </geometry>
+      <material>
+        <ambient>0.5 0.5 0.5</ambient>
+        <diffuse>0.5 0.5 0.5</diffuse>
+      </material>
+    </visual>
+  </link>
+
+  <joint name="left_steering_hinge_joint" type="revolute">
+  <pose> 0.15 0.12 0 0 1.5708 0 </pose>
+    <parent>base_link</parent>
+    <child>left_steering_hinge</child>
+    <axis>
+       <xyz>-1 0 0 </xyz>
+     </axis>
+
+    <limit>
+      <lower>-1.0</lower>
+      <upper>1.0</upper>
+      <effort>10</effort>
+      <velocity>100</velocity>
+    </limit>
+
+  </joint>
+
+
+  <link name="right_steering_hinge">
+    <pose>0.15 -0.12 0 0 0 0</pose>
+    <inertial>
+      <mass>0.1</mass>
+      <inertia>
+        <ixx>4E-06</ixx>
+        <iyy>4E-06</iyy>
+        <izz>4E-06</izz>
+      </inertia>
+    </inertial>
+    <visual name ="visual">
+      <geometry>
+        <mesh>
+          <uri>model://right_steering_hinge.STL</uri>
+        </mesh>
+      </geometry>
+      <material>
+        <ambient>0.5 0.5 0.5</ambient>
+        <diffuse>0.5 0.5 0.5</diffuse>
+      </material>
+      </visual>
+  </link>
+
+  <joint name="right_steering_hinge_joint" type="revolute">
+    <pose> 0.15 -0.12 0 0 1.5708 0 </pose>
+    <parent>base_link </parent>
+    <child>right_steering_hinge</child>
+    <axis>
+       <xyz>-1 0 0 </xyz>
+     </axis>
+    <limit>
+      <lower>-1.0</lower>
+      <upper>1.0</upper>
+      <effort>10</effort>
+      <velocity>100</velocity>
+    </limit>
+  </joint>
+
+  <plugin
+    filename="ignition-gazebo-joint-position-controller-system"
+    name="ignition::gazebo::systems::JointPositionController">
+    <joint_name>right_steering_hinge_joint</joint_name>
+    <topic>str_cmd</topic>
+    <p_gain>1</p_gain>
+    <i_gain>0.1</i_gain>
+    <d_gain>0.01</d_gain>
+    <i_max>1</i_max>
+    <i_min>-1</i_min>
+    <cmd_max>1000</cmd_max>
+    <cmd_min>-1000</cmd_min>
+  </plugin>
+
+
+  <link name="left_front_wheel">
+    <pose>0.15 0.12 0 -1.57 0 0 </pose>
+    <inertial>
+      <mass>0.34055</mass>
+      <inertia>
+        <ixx>0.00026046</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.00026046</iyy>
+        <iyz>0</iyz>
+        <izz>0.00041226</izz>
+      </inertia>
+    </inertial>
+    <visual name ="visual">
+      <geometry>
+        <mesh>
+          <uri>model://wheel_tire.dae</uri>
+        </mesh>
+      </geometry>
+    </visual>
+    <collision name="collision">
+      <geometry>
+        <cylinder>
+          <length>0.045</length>
+          <radius>0.05</radius>
+        </cylinder>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="left_front_wheel_joint" type="revolute">
+    <pose> 0.15 0.12 0 0 1.5708 0 </pose>
+    <parent>left_steering_hinge </parent>
+    <child>left_front_wheel </child>
+    <axis>
+       <xyz>0 0 -1</xyz>
+     </axis>
+    <dynamics>
+       <damping>0.005</damping>
+        <friction>0.0</friction>
+      </dynamics>
+      <limit>
+        <lower>-1.79769e+308</lower>
+        <upper>1.79769e+308</upper>
+         <effort>10</effort>
+         <velocity>100</velocity>
+      </limit>
+  </joint>
+
+
+  <link name="right_front_wheel">
+      <pose> 0.15 -0.12 0 1.57 0 0 </pose>
+    <inertial>
+      <mass>0.34055</mass>
+      <inertia>
+        <ixx>0.00026046</ixx>
+        <ixy>0</ixy>
+        <ixz>0</ixz>
+        <iyy>0.00026046</iyy>
+        <iyz>0</iyz>
+        <izz>0.00041226</izz>
+      </inertia>
+    </inertial>
+    <visual name ="visual">
+      <geometry>
+        <mesh>
+          <uri>model://wheel_tire.dae</uri>
+        </mesh>
+        </geometry>
+    </visual>
+    <collision name="collision">
+      <geometry>
+        <cylinder>
+          <length>0.045</length>
+          <radius>0.05</radius>
+        </cylinder>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="right_front_wheel_joint" type="revolute">
+    <pose> 0.15 -0.12 0 0 1.5708 0 </pose>
+    <parent>right_steering_hinge</parent>
+    <child>right_front_wheel</child>
+    <axis>
+       <xyz>0 0 -1</xyz>
+     </axis>
+    <dynamics>
+       <damping>0.005</damping>
+        <friction>0.0</friction>
+      </dynamics>
+      <limit>
+        <lower>-1.79769e+308</lower>
+        <upper>1.79769e+308</upper>
+         <effort>10</effort>
+         <velocity>100</velocity>
+      </limit>
+  </joint>
+
+  <!--plugin
+    filename="libignition-gazebo-wheel-slip-system.so"
+    name="ignition::gazebo::systems::WheelSlip">
+    <wheel link_name="right_front_wheel">
+      <slip_compliance_lateral>1</slip_compliance_lateral>
+      <slip_compliance_longitudinal>1</slip_compliance_longitudinal>
+      <wheel_normal_force>32</wheel_normal_force>
+      <wheel_radius>0.05</wheel_radius>
+    </wheel>
+    <wheel link_name="left_front_wheel">
+      <slip_compliance_lateral>1</slip_compliance_lateral>
+      <slip_compliance_longitudinal>1</slip_compliance_longitudinal>
+      <wheel_normal_force>32</wheel_normal_force>
+      <wheel_radius>0.05</wheel_radius>
+    </wheel>
+    <wheel link_name="left_rear_wheel">
+      <slip_compliance_lateral>1</slip_compliance_lateral>
+      <slip_compliance_longitudinal>1</slip_compliance_longitudinal>
+      <wheel_normal_force>32</wheel_normal_force>
+      <wheel_radius>0.05</wheel_radius>
+    </wheel>
+    <wheel link_name="right_rear_wheel">
+      <slip_compliance_lateral>1</slip_compliance_lateral>
+      <slip_compliance_longitudinal>1</slip_compliance_longitudinal>
+      <wheel_normal_force>32</wheel_normal_force>
+      <wheel_radius>0.05</wheel_radius>
+    </wheel>
+  </plugin-->
+
+
+</model>
+</sdf>
