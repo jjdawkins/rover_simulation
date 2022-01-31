@@ -1,6 +1,11 @@
 <launch>
+
+  <!--Location options are artemis, HopperFloorG_Full,  /-->
+  <arg name="location" default="artemis" />
+
+
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find rover_gazebo)/worlds/artemis.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+    <arg name="world_name" value="$(find rover_gazebo)/worlds/$(arg location).world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="true"/>
@@ -8,13 +13,19 @@
     <arg name="debug" value="false"/>
   </include>
 
-  <rosparam file="$(find rover_gazebo)/config/gazebo_rover_sim.yaml" command="load"/>
   <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
-  <param name="robot_description" command="$(find xacro)/xacro '$(find rover_description)/urdf/rover.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro '$(find rover_description)/urdf/rover.xacro'"/>
+
+  <arg name="x" default="0"/>
+  <arg name="y" default="1"/>
+  <arg name="z" default="0.5"/>
 
   <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="rover_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args="-urdf -param robot_description -model rover -x $(arg x) -y $(arg y) -z $(arg z)"/>
 
-  <node name="rover_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model rover -x 0 -y 2 -z 0.1"/>
+  <!-- ros_control rover launch file -->
+  <include file="$(find rover_control)/launch/rover_control.launch"/>
 
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 

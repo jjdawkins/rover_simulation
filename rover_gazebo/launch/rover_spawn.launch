@@ -18,7 +18,7 @@
 <include file="$(find rover_control)/launch/rover_control.launch"/>
 
 <!-- Launch robot state publisher /-->
-<!--node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" /-->
+<node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 <!-- convert joint states to TF transforms for rviz, etc -->
 <!--node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
   respawn="false" output="screen">
