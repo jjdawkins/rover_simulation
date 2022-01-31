@@ -47,8 +47,8 @@ rover:
   left_steering_hinge_position_controller:
     joint: left_steering_hinge_joint
     type: effort_controllers/JointPositionController
-    pid: {p: 1.0, i: 0.0, d: 0.5}
+    pid: {p: 4.0, i: 0.0, d: 0.2}
   right_steering_hinge_position_controller:
     joint: right_steering_hinge_joint
     type: effort_controllers/JointPositionController
-    pid: {p: 1.0, i: 0.0, d: 0.5}
+    pid: {p: 4.0, i: 0.0, d: 0.2}
