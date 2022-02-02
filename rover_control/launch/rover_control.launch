@@ -19,12 +19,9 @@
     <remap from="/joint_states" to="/rover/joint_states" />
   </node-->
 
-  <!-- servo, VESC, and forward speed (based on wheel speed) node -->
+  <!-- servo, VESC interface simulator, also contains odom TF proadcaster -->
   <node pkg="rover_control" type="VESC_servo_sim.py" name="hardware_io" ns ="/rover" />
 
-
-
-  <!--node ns = "rover" name="turtlebot3_teleop_remapper" pkg="rover_control" type="turtlebot3_teleop_remapper.py"/-->
   <!--node ns = "rover" name="rover_tracking_control" pkg="rover_control" type="spd_yrt_controller.py"/-->
 
 </launch>

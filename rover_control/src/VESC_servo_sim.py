@@ -29,7 +29,7 @@ class VESC_simInterface:
         self.speed = 0.0
 
 
-        self.speed_pub = rospy.Publisher('speed',Float64,queue_size=5)
+        #self.speed_pub = rospy.Publisher('speed',Float64,queue_size=5)
         self.qtm_sub = rospy.Subscriber("joint_states",JointState,self.speedCallback)
         self.imu_sub = rospy.Subscriber("imu",Imu,self.IMUCallback)
         self.ack_sub = rospy.Subscriber("ackermann_cmd", AckermannDriveStamped, self.ackerCallBack)
@@ -43,6 +43,7 @@ class VESC_simInterface:
         self.pub_pos_left_steering_hinge = rospy.Publisher('left_steering_hinge_position_controller/command', Float64, queue_size=1)
         self.pub_pos_right_steering_hinge = rospy.Publisher('right_steering_hinge_position_controller/command', Float64, queue_size=1)
         self.odom_broadcaster = tf2_ros.TransformBroadcaster()
+        self.odom_pub = rospy.Publisher('odom',Odometry,queue_size=1)
 
         self.send_timer = rospy.Timer(rospy.Duration(self.dt), self.set_throttle_steer_callback)
         self.odom_timer = rospy.Timer(rospy.Duration(self.dt),self.odomTFCallback)
@@ -54,12 +55,13 @@ class VESC_simInterface:
         speedlr = msg.velocity[1]
         speedrf = msg.velocity[3]
         speedrr = msg.velocity[4]
-        speedavg = ( abs(speedlf) + abs(speedlr) + abs(speedrf) + abs(speedrr))/4.0
-        speed = Float64()
-        speed.data = speedavg*0.05 # v=omega*r, r=0.05 wheel radius
+        speedavg = (speedlf + speedlr + speedrf + speedrr)/4.0
+        self.speed = speedavg*0.05 # v=omega*r, r=0.05 wheel radius
+        #speed = Float64()
+        #speed.data = speedavg*0.05 # v=omega*r, r=0.05 wheel radius
 
         # publish ackermann message
-        self.speed_pub.publish(speed)
+        # self.speed_pub.publish(speed)
 
     def IMUCallback(self,msg):
         self.yawRate = msg.angular_velocity.z
@@ -89,6 +91,23 @@ class VESC_simInterface:
         t.transform.rotation.z = self.quat[2]
         t.transform.rotation.w = self.quat[3]
         self.odom_broadcaster.sendTransform(t)
+
+        Od = Odometry()
+        Od.header.stamp = rospy.Time.now()
+        Od.header.frame_id = "odom"
+        Od.child_frame_id = "base_link"
+        Od.pose.pose.position.x = self.x
+        Od.pose.pose.position.y = self.y
+        Od.pose.pose.position.z = 0.0
+        Od.pose.pose.orientation.x = self.quat[0]
+        Od.pose.pose.orientation.y = self.quat[1]
+        Od.pose.pose.orientation.z = self.quat[2]
+        Od.pose.pose.orientation.w = self.quat[3]
+        Od.twist.twist.linear.x = self.speed
+        Od.twist.twist.angular.z = self.yawRate
+        self.odom_pub.publish(Od)
+
+
         print("sent odom")
 
     def set_throttle_steer_callback(self,msg):
