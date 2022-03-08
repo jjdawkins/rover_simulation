@@ -16,7 +16,7 @@ from sensor_msgs.msg import JointState, Imu
 
 class VESC_simInterface:
     def __init__(self):
-        self.max_str_angle=rospy.get_param('max_str_angle',0.2)
+        self.max_str_angle=rospy.get_param('max_str_angle',0.5)
         self.str_ang = 0.0
         self.spd_cmd = 0.0
         self.time_out = 0.0
@@ -27,13 +27,14 @@ class VESC_simInterface:
         self.dt = 0.05
         self.quat = (0,0,0,1)
         self.speed = 0.0
+        self.spd_conversion_constant = 3092.53 # converts from m/s to erpm
 
 
         #self.speed_pub = rospy.Publisher('speed',Float64,queue_size=5)
         self.qtm_sub = rospy.Subscriber("joint_states",JointState,self.speedCallback)
         self.imu_sub = rospy.Subscriber("imu",Imu,self.IMUCallback)
-        self.ack_sub = rospy.Subscriber("ackermann_cmd", AckermannDriveStamped, self.ackerCallBack)
-
+        self.speed_sub = rospy.Subscriber("/rover/commands/motor/speed",Float64,self.spdCmdCallback)
+        self.str_sub = rospy.Subscriber("/rover/commands/servo/position",Float64,self.strCmdCallback)
 
         self.pub_vel_left_rear_wheel = rospy.Publisher('left_rear_wheel_speed_controller/command', Float64, queue_size=1)
         self.pub_vel_right_rear_wheel = rospy.Publisher('right_rear_wheel_speed_controller/command', Float64, queue_size=1)
@@ -42,6 +43,7 @@ class VESC_simInterface:
 
         self.pub_pos_left_steering_hinge = rospy.Publisher('left_steering_hinge_position_controller/command', Float64, queue_size=1)
         self.pub_pos_right_steering_hinge = rospy.Publisher('right_steering_hinge_position_controller/command', Float64, queue_size=1)
+
         self.odom_broadcaster = tf2_ros.TransformBroadcaster()
         self.odom_pub = rospy.Publisher('odom',Odometry,queue_size=1)
 
@@ -70,10 +72,12 @@ class VESC_simInterface:
         roll, pitch, yaw = tf_conversions.transformations.euler_from_quaternion(self.quat)
         self.yaw = yaw
 
+    def spdCmdCallback(self,msg):
+        self.spd_cmd = msg.data/self.spd_conversion_constant
+        self.time_out = rospy.get_time()
 
-    def ackerCallBack(self,msg):
-        self.str_ang = msg.drive.steering_angle
-        self.spd_cmd = msg.drive.speed
+    def strCmdCallback(self,msg):
+        self.str_ang = (msg.data-0.5)/0.5 # converts from [0,1] scale to [-.5,.5] scale
         self.time_out = rospy.get_time()
 
     def odomTFCallback(self,msg):
@@ -106,13 +110,11 @@ class VESC_simInterface:
         Od.twist.twist.linear.x = self.speed
         Od.twist.twist.angular.z = self.yawRate
         self.odom_pub.publish(Od)
-
-
-        print("sent odom")
+        #print("sent odom")
 
     def set_throttle_steer_callback(self,msg):
 
-        rospy.loginfo("%f",(rospy.get_time()-self.time_out))
+        #rospy.loginfo("%f",(rospy.get_time()-self.time_out))
         if((rospy.get_time()-self.time_out) < 0.3):
             ang_spd = self.spd_cmd/0.05 # 0.05 is wheel radius
             steer = self.str_ang

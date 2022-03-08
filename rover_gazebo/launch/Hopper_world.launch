@@ -1,5 +1,5 @@
 <launch>
-  <!--Location options are artemis, HopperFloorG_Full,  /-->
+  <!--Location options are artemis, artemis_obstacle, HopperFloorG_Full,  /-->
   <arg name="location" default="artemis" />
 
 

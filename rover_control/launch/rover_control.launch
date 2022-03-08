@@ -13,15 +13,12 @@
     right_front_wheel_speed_controller left_front_wheel_speed_controller
     left_steering_hinge_position_controller right_steering_hinge_position_controller joint_state_controller"/>
 
-  <!-- convert joint states to TF transforms for rviz, etc -->
-  <!--node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
-    respawn="false" output="screen">
-    <remap from="/joint_states" to="/rover/joint_states" />
-  </node-->
+  <!-- Launches joystick node /-->
+  <node name="joystick" pkg="joy" type="joy_node"/>
 
   <!-- servo, VESC interface simulator, also contains odom TF proadcaster -->
-  <node pkg="rover_control" type="VESC_servo_sim.py" name="hardware_io" ns ="/rover" />
+  <node pkg="rover_control" type="VESC_servo_sim.py" name="hardware_io" ns="rover" output="screen"/>
 
-  <!--node ns = "rover" name="rover_tracking_control" pkg="rover_control" type="spd_yrt_controller.py"/-->
+  <node pkg="rover_control" type="rover_sim_interface.py" name="rover_sim_interface" ns="rover" output="screen"/>
 
 </launch>
