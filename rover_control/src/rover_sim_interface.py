@@ -8,6 +8,7 @@ import numpy as np
 
 from ackermann_msgs.msg import *
 from std_msgs.msg import Empty, String, Header, Float64
+from geometry_msgs.msg import Twist
 from sensor_msgs.msg import Joy
 from rover_control.msg import status
 from rover_control.srv import setArm, setMode
@@ -26,6 +27,7 @@ class RoverSimInterface():
 
         self.max_str_angle = rospy.get_param('~max_str_angle',0.5)
         self.encoder_constant = rospy.get_param('~encoder_constant',3000)
+        self.wheel_base = rospy.get_param('~wheel_base',0.4)
         self.time_out = 0
         self.auto_mode = False
         self.armed = False
@@ -41,6 +43,7 @@ class RoverSimInterface():
         self.str_cmd_pub = rospy.Publisher('/rover/commands/servo/position',Float64,queue_size=10)
         self.status_pub = rospy.Publisher('status',status,queue_size=2)
         self.acker_sub = rospy.Subscriber('acker_cmd',AckermannDriveStamped,self.ackerCallBack)
+        self.cmd_sub = rospy.Subscriber('cmd_vel',Twist,self.cmdVelCallBack)
         self.arm_srv = rospy.Service('arm',setArm,self.armCallBack)
         self.mode_srv = rospy.Service('mode',setMode,self.modeCallBack)
 
@@ -70,6 +73,19 @@ class RoverSimInterface():
             self.str_cmd = msg.drive.steering_angle/self.max_str_angle
 
             self.spd_cmd = msg.drive.speed
+            #rospy.loginfo("Str_PWM: %f, Thr_PWM: %f",str_cmd,thr_cmd)
+
+        self.time_out = rospy.get_time();
+
+    def cmdVelCallBack(self,msg):
+        rospy.loginfo("cmdvel_Callback")
+
+        if(abs(msg.linear.x) > 0.1):
+            self.str_cmd = math.atan(msg.angular.z*self.wheel_base/msg.linear.x)/self.max_str_angle
+        else:
+            self.str_cmd = math.abs(msg.linear.x)*msg.angular.z/self.max_str_angle
+
+        self.spd_cmd = msg.linear.x
             #rospy.loginfo("Str_PWM: %f, Thr_PWM: %f",str_cmd,thr_cmd)
 
         self.time_out = rospy.get_time();
