@@ -18,7 +18,7 @@
 
   <!-- servo, VESC interface simulator, also contains odom TF proadcaster -->
   <node pkg="rover_control" type="VESC_servo_sim.py" name="hardware_io" ns="rover" output="screen"/>
-
+  <node pkg="rover_control" type="motion_capture_sim.py" name="mocap_emulator" output="screen"/>
   <node pkg="rover_control" type="rover_sim_interface.py" name="rover_sim_interface" ns="rover" output="screen"/>
 
 </launch>
