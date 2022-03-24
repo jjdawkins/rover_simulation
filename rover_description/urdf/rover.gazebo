@@ -12,8 +12,8 @@
 </gazebo>
 
 <gazebo reference="left_rear_wheel">
-  <mu1 value="2.0"/>
-  <mu2 value="2.0"/>
+  <mu1 value="1.6"/>
+  <mu2 value="1.6"/>
   <kp  value="10000000.0" />
   <kd  value="2.0" />
   <fdir1 value="1 0 0"/>
@@ -21,8 +21,8 @@
 </gazebo>
 
 <gazebo reference="right_rear_wheel">
-  <mu1 value="2.0"/>
-  <mu2 value="2.0"/>
+  <mu1 value="1.6"/>
+  <mu2 value="1.6"/>
   <kp  value="10000000.0" />
   <kd  value="2.0" />
   <fdir1 value="1 0 0"/>
@@ -30,8 +30,8 @@
 </gazebo>
 
 <gazebo reference="left_front_wheel">
-  <mu1 value="2.0"/>
-  <mu2 value="2.0"/>
+  <mu1 value="1.6"/>
+  <mu2 value="1.6"/>
   <kp  value="10000000.0" />
   <kd  value="2.0" />
   <fdir1 value="0 0 1"/>
@@ -39,8 +39,8 @@
 </gazebo>
 
 <gazebo reference="right_front_wheel">
-  <mu1 value="2.0"/>
-  <mu2 value="2.0"/>
+  <mu1 value="1.6"/>
+  <mu2 value="1.6"/>
   <kp  value="10000000.0" />
   <kd  value="2.0" />
   <fdir1 value="0 0 1"/>
@@ -55,16 +55,16 @@
     <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
   </plugin>
 
-  <!--plugin name="rover_base_odom" filename="libgazebo_ros_p3d.so">
+  <plugin name="rover_base_odom" filename="libgazebo_ros_p3d.so">
     <alwaysOn>true</alwaysOn>
     <updateRate>50.0</updateRate>
     <bodyName>base_link</bodyName>
-    <topicName>rover/odom</topicName>
+    <topicName>rover/mocap/odom</topicName>
     <gaussianNoise>0.01</gaussianNoise>
     <frameName>map</frameName>
     <xyzOffsets>0 0 0</xyzOffsets>
     <rpyOffsets>0 0 0</rpyOffsets>
-  </plugin-->
+  </plugin>
 
 </gazebo>
 
