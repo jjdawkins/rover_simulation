@@ -68,7 +68,7 @@ class RoverSimInterface():
 
 
     def ackerCallBack(self,msg):
-        rospy.loginfo("acker_Callback")
+        #rospy.loginfo("acker_Callback")
         if(self.auto_mode):
             self.str_cmd = msg.drive.steering_angle/self.max_str_angle
 
@@ -167,7 +167,7 @@ class RoverSimInterface():
             mot_cmd_msg = Float64()
             mot_cmd_msg.data = 3092.53*self.spd_cmd
             # Change here to publish to VESC control topic (PWM or speed if PWM is not compatible)
-            print(mot_cmd_msg)
+            #print(mot_cmd_msg)
             self.spd_cmd_pub.publish(mot_cmd_msg)
             ##self.thr_pwm.set_duty_cycle(thr_cmd)
             # ADD CODE HERE TO PUBLISH TO VESC SPEED CONTROL TOPIC
