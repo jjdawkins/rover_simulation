@@ -1,0 +1,539 @@
+<?xml version="1.0" ?>
+<sdf version="1.6">
+  <world name="default">
+
+    <gui>
+      <camera name="user_camera">
+        <pose>-5 3 9 0 0.9 0</pose>
+      </camera>
+    </gui>
+
+    <light type="directional" name="sun">
+      <cast_shadows>true</cast_shadows>
+      <pose>0 0 10 0 0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+
+    <model name="ground_plane">
+      <static>true</static>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.8 0.8 0.8 1</ambient>
+            <diffuse>0.8 0.8 0.8 1</diffuse>
+            <specular>0.8 0.8 0.8 1</specular>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <model name="back_wall">
+      <pose>-0.3 8.03 2.44 0 0 0</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>12.8 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>12.8 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+
+    <model name="right_wall">
+      <pose>6.09 3.86 2.44 0 0 1.57 </pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>9.03 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>9.03 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+
+    <model name="front_wall">
+      <pose>3.05 -0.5 2.44 0 0 0</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>6.09 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>6.09 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="back_left_wall">
+      <pose>-7.57 7.42 2.44 0 0 0.61</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>2.33 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>2.63 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="door_wall">
+      <pose>-1.08 -1.256 2.44 0 0 0.61</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>3.14 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>3.14 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="left_wall">
+      <pose>-5.22 2.36 2.44 0 0 2.18</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>11.17 0.5 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>11.17 0.5 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+    <model name="column">
+      <pose>-0.5 6.81 2.18 0 0 0</pose>
+      <static>true</static>
+      <link name="base_link">
+      <collision name="collision">
+         <geometry>
+           <box>
+             <size>1.2 1.2 4.87</size>
+           </box>
+         </geometry>
+       </collision>
+       <visual name="visual">
+         <transparency>0.3</transparency>
+         <geometry>
+           <box>
+             <size>1.2 1.2 4.87</size>
+           </box>
+         </geometry>
+       </visual>
+       </link>
+    </model>
+
+    <model name="rover">
+    <pose> 0 2 0.1 0 0 0 </pose>
+    <link name="base_link">
+      <pose> 0 0 0 0 0 0 </pose>
+      <inertial>
+        <mass>4.0</mass>
+        <inertia>
+          <ixx>0.126164</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.416519</iyy>
+          <iyz>0</iyz>
+          <izz>0.481014</izz>
+        </inertia>
+      </inertial>
+      <collison>
+
+        <geometry>
+          <box>
+            <size>0.3 0.2 0.1</size>
+          </box>
+        </geometry>
+      </collison>
+      <visual name ="visual">
+        <geometry>
+          <mesh>
+           <uri>model://chassis.dae</uri>
+         </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+    <link name="body">
+      <visual name ="visual">
+        <pose> -0.05 0 0.13 0 0 0 </pose>
+        <geometry>
+          <mesh>
+            <uri>model://body.dae </uri>
+          </mesh>
+        </geometry>
+      </visual>
+
+      <collison>
+        <geometry>
+          <box>
+            <size>0.3 0.2 0.1</size>
+          </box>
+        </geometry>
+      </collison>
+    </link>
+
+    <joint name="body_chassis_joint" type="fixed">
+      <pose> 0 0 0 0 0 0 </pose>
+      <parent>base_link</parent>
+      <child>body</child>
+    </joint>
+
+    <link name="left_rear_wheel">
+      <pose>-0.15 0.12 0 1.5708 0 0 </pose>
+      <inertial>
+        <mass>0.34055</mass>
+        <inertia>
+          <ixx>0.00026046</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00026046</iyy>
+          <iyz>0</iyz>
+          <izz>0.00041226</izz>
+        </inertia>
+      </inertial>
+      <visual name ="visual">
+        <geometry>
+          <mesh>
+             <uri>model://wheel_tire.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="collision">
+
+        <geometry>
+          <cylinder>
+            <length>0.045</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+
+
+    <joint name="left_rear_wheel_joint" type="revolute">
+      <pose> -0.15 0.12 0 1.5708 0 0 </pose>
+      <parent>base_link</parent>
+      <child>left_rear_wheel</child>
+      <axis> xyz="0 0 -1" />
+      <xyz>0 0 -1 </xyz>
+      <limit>
+        <lower>-1.79769e+308</lower>
+        <upper>1.79769e+308</upper>
+        <effort>10</effort>
+        <velocity>100</velocity>
+      </limit>
+    </axis>
+    </joint>
+
+
+    <link name="right_rear_wheel">
+      <pose> -0.15 -0.12 0 -1.5708 0 0 </pose>
+      <inertial>
+        <mass>0.34055</mass>
+        <inertia>
+          <ixx>0.00026046</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00026046</iyy>
+          <iyz>0</iyz>
+          <izz>0.00041226</izz>
+        </inertia>
+      </inertial>
+      <visual name ="visual">
+        <geometry>
+          <mesh>
+            <uri>model://wheel_tire.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <length>0.045</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="right_rear_wheel_joint" type="revolute">
+      <pose>-0.15 -0.12 0 1.5708 0 0 </pose>
+      <parent>base_link</parent>
+      <child>right_rear_wheel</child>
+      <axis>
+        <xyz>0 0 -1 </xyz>
+      </axis>
+      <limit>
+        <lower>-1.79769e+308</lower>
+        <upper>1.79769e+308</upper>
+        <effort>10</effort>
+        <velocity>100</velocity>
+      </limit>
+    </joint>
+
+
+    <link name="left_steering_hinge">
+      <pose>0.15 0.12 0 0 1.5708 0</pose>
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>4E-06</ixx>
+          <iyy>4E-06</iyy>
+          <izz>4E-06</izz>
+        </inertia>
+      </inertial>
+      <visual name ="visual">
+        <geometry>
+          <mesh>
+            <uri>model://left_steering_hinge.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.5 0.5 0.5</ambient>
+          <diffuse>0.5 0.5 0.5</diffuse>
+        </material>
+      </visual>
+    </link>
+
+    <joint name="left_steering_hinge_joint" type="revolute">
+    <pose> 0.15 0.12 0 0 1.5708 0 </pose>
+      <parent>base_link</parent>
+      <child>left_steering_hinge</child>
+      <axis>
+         <xyz>-1 0 0 </xyz>
+       </axis>
+
+      <limit>
+        <lower>-1.0</lower>
+        <upper>1.0</upper>
+        <effort>10</effort>
+        <velocity>100</velocity>
+      </limit>
+
+    </joint>
+
+
+    <link name="right_steering_hinge">
+      <pose>0.15 -0.12 0 0 0 0</pose>
+      <inertial>
+        <mass>0.1</mass>
+        <inertia>
+          <ixx>4E-06</ixx>
+          <iyy>4E-06</iyy>
+          <izz>4E-06</izz>
+        </inertia>
+      </inertial>
+      <visual name ="visual">
+        <geometry>
+          <mesh>
+            <uri>model://right_steering_hinge.STL</uri>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.5 0.5 0.5</ambient>
+          <diffuse>0.5 0.5 0.5</diffuse>
+        </material>
+        </visual>
+    </link>
+
+    <joint name="right_steering_hinge_joint" type="revolute">
+      <pose> 0.15 -0.12 0 0 1.5708 0 </pose>
+      <parent>base_link </parent>
+      <child>right_steering_hinge</child>
+      <axis>
+         <xyz>-1 0 0 </xyz>
+       </axis>
+      <limit>
+        <lower>-1.0</lower>
+        <upper>1.0</upper>
+        <effort>10</effort>
+        <velocity>100</velocity>
+      </limit>
+    </joint>
+
+
+    <link name="left_front_wheel">
+      <pose>0.15 0.12 0 -1.57 0 0 </pose>
+      <inertial>
+        <mass>0.34055</mass>
+        <inertia>
+          <ixx>0.00026046</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00026046</iyy>
+          <iyz>0</iyz>
+          <izz>0.00041226</izz>
+        </inertia>
+      </inertial>
+      <visual name ="visual">
+        <geometry>
+          <mesh>
+            <uri>model://wheel_tire.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <length>0.045</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="left_front_wheel_joint" type="revolute">
+      <pose> 0.15 0.12 0 0 1.5708 0 </pose>
+      <parent>left_steering_hinge </parent>
+      <child>left_front_wheel </child>
+      <axis>
+         <xyz>0 0 -1</xyz>
+       </axis>
+      <dynamics>
+         <damping>0.005</damping>
+          <friction>0.0</friction>
+        </dynamics>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+           <effort>10</effort>
+           <velocity>100</velocity>
+        </limit>
+    </joint>
+
+
+    <link name="right_front_wheel">
+        <pose> 0.15 -0.12 0 1.57 0 0 </pose>
+      <inertial>
+        <mass>0.34055</mass>
+        <inertia>
+          <ixx>0.00026046</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00026046</iyy>
+          <iyz>0</iyz>
+          <izz>0.00041226</izz>
+        </inertia>
+      </inertial>
+      <visual name ="visual">
+        <geometry>
+          <mesh>
+            <uri>model://wheel_tire.dae</uri>
+          </mesh>
+          </geometry>
+      </visual>
+      <collision name="collision">
+        <geometry>
+          <cylinder>
+            <length>0.045</length>
+            <radius>0.05</radius>
+          </cylinder>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="right_front_wheel_joint" type="revolute">
+      <pose> 0.15 -0.12 0 0 1.5708 0 </pose>
+      <parent>right_steering_hinge</parent>
+      <child>right_front_wheel</child>
+      <axis>
+         <xyz>0 0 -1</xyz>
+       </axis>
+      <dynamics>
+         <damping>0.005</damping>
+          <friction>0.0</friction>
+        </dynamics>
+        <limit>
+          <lower>-1.79769e+308</lower>
+          <upper>1.79769e+308</upper>
+           <effort>10</effort>
+           <velocity>100</velocity>
+        </limit>
+    </joint>
+
+
+
+    </model>
+  </world>
+
+
+
+</sdf>
