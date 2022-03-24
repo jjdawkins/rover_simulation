@@ -27,19 +27,19 @@ rover:
   left_rear_wheel_speed_controller:
     type: effort_controllers/JointVelocityController
     joint: left_rear_wheel_joint
-    pid: {p: 2.0, i: 0.05, d: 0.0, i_clamp: 0.0}
+    pid: {p: 0.3, i: 0.025, d: 0.0, i_clamp: 0.0}
   right_rear_wheel_speed_controller:
     type: effort_controllers/JointVelocityController
     joint: right_rear_wheel_joint
-    pid: {p: 2.0, i: 0.05, d: 0.0, i_clamp: 0.0}
+    pid: {p: 0.3, i: 0.025, d: 0.0, i_clamp: 0.0}
   left_front_wheel_speed_controller:
     type: effort_controllers/JointVelocityController
     joint: left_front_wheel_joint
-    pid: {p: 2.0, i: 0.05, d: 0.0, i_clamp: 0.0}
+    pid: {p: 0.3, i: 0.025, d: 0.0, i_clamp: 0.0}
   right_front_wheel_speed_controller:
     type: effort_controllers/JointVelocityController
     joint: right_front_wheel_joint
-    pid: {p: 2.0, i: 0.05, d: 0.0, i_clamp: 0.0}
+    pid: {p: 0.3, i: 0.025, d: 0.0, i_clamp: 0.0}
 
 
 
